@@ -1122,7 +1122,7 @@ section[id]{scroll-margin-top:72px}
 
   <h3>Moduli di contatto e di adesione</h3>
   <p>Se compili i moduli del sito (richiesta a uno stand o candidatura come espositore), il nostro modulo su Google Moduli, o ci scrivi, trattiamo i dati che ci fornisci: nome, azienda, email, paese, tipo di attività, messaggio ed eventualmente telefono. Li usiamo solo per rispondere alla tua richiesta, valutare la tua adesione a Mercatale e ricontattarti. La base giuridica è la tua richiesta di informazioni e l'esecuzione di misure precontrattuali (art. 6.1.b GDPR).</p>
-  <p>I moduli del sito ci inoltrano i dati via email tramite il servizio FormSubmit; Google Moduli e Gmail sono forniti da Google. Questi fornitori possono trattare i dati anche fuori dall'Unione europea, con le garanzie previste dal GDPR (EU-US Data Privacy Framework e clausole contrattuali standard). Conserviamo i dati per massimo 24 mesi dall'ultimo contatto, oppure fino alla tua richiesta di cancellazione.</p>
+  <p>I moduli del sito ci inoltrano i dati via email tramite il servizio Web3Forms; Google Moduli e Gmail sono forniti da Google. Questi fornitori possono trattare i dati anche fuori dall'Unione europea, con le garanzie previste dal GDPR (EU-US Data Privacy Framework e clausole contrattuali standard). Conserviamo i dati per massimo 24 mesi dall'ultimo contatto, oppure fino alla tua richiesta di cancellazione.</p>
 
   <h3>Se ti abbiamo scritto noi</h3>
   <p>Se hai ricevuto una nostra email, abbiamo usato l'indirizzo che la tua azienda pubblica sul proprio sito o in cataloghi di fiere di settore. Non acquistiamo liste di indirizzi e non li cediamo a nessuno. Basta una risposta con scritto "non interessato" per non ricevere più nostre comunicazioni e far cancellare il tuo indirizzo.</p>
@@ -1204,6 +1204,7 @@ const COUNTRIES = {
   NL:{it:"Paesi Bassi",en:"Netherlands",de:"Niederlande"}, BE:{it:"Belgio",en:"Belgium",de:"Belgien"}, FR:{it:"Francia",en:"France",de:"Frankreich"},
   DK:{it:"Danimarca",en:"Denmark",de:"Dänemark"}, SE:{it:"Svezia",en:"Sweden",de:"Schweden"}, PL:{it:"Polonia",en:"Poland",de:"Polen"}, ES:{it:"Spagna",en:"Spain",de:"Spanien"}
 };
+const EU_ALL = {AL:{it:"Albania",en:"Albania",de:"Albanien"},AD:{it:"Andorra",en:"Andorra",de:"Andorra"},AM:{it:"Armenia",en:"Armenia",de:"Armenien"},AT:{it:"Austria",en:"Austria",de:"Österreich"},AZ:{it:"Azerbaigian",en:"Azerbaijan",de:"Aserbaidschan"},BY:{it:"Bielorussia",en:"Belarus",de:"Belarus"},BE:{it:"Belgio",en:"Belgium",de:"Belgien"},BA:{it:"Bosnia ed Erzegovina",en:"Bosnia and Herzegovina",de:"Bosnien und Herzegowina"},BG:{it:"Bulgaria",en:"Bulgaria",de:"Bulgarien"},CY:{it:"Cipro",en:"Cyprus",de:"Zypern"},HR:{it:"Croazia",en:"Croatia",de:"Kroatien"},DK:{it:"Danimarca",en:"Denmark",de:"Dänemark"},EE:{it:"Estonia",en:"Estonia",de:"Estland"},FI:{it:"Finlandia",en:"Finland",de:"Finnland"},FR:{it:"Francia",en:"France",de:"Frankreich"},GE:{it:"Georgia",en:"Georgia",de:"Georgien"},DE:{it:"Germania",en:"Germany",de:"Deutschland"},GR:{it:"Grecia",en:"Greece",de:"Griechenland"},IE:{it:"Irlanda",en:"Ireland",de:"Irland"},IS:{it:"Islanda",en:"Iceland",de:"Island"},IT:{it:"Italia",en:"Italy",de:"Italien"},XK:{it:"Kosovo",en:"Kosovo",de:"Kosovo"},LV:{it:"Lettonia",en:"Latvia",de:"Lettland"},LI:{it:"Liechtenstein",en:"Liechtenstein",de:"Liechtenstein"},LT:{it:"Lituania",en:"Lithuania",de:"Litauen"},LU:{it:"Lussemburgo",en:"Luxembourg",de:"Luxemburg"},MT:{it:"Malta",en:"Malta",de:"Malta"},MD:{it:"Moldavia",en:"Moldova",de:"Moldau"},MC:{it:"Monaco",en:"Monaco",de:"Monaco"},ME:{it:"Montenegro",en:"Montenegro",de:"Montenegro"},NO:{it:"Norvegia",en:"Norway",de:"Norwegen"},NL:{it:"Paesi Bassi",en:"Netherlands",de:"Niederlande"},PL:{it:"Polonia",en:"Poland",de:"Polen"},PT:{it:"Portogallo",en:"Portugal",de:"Portugal"},GB:{it:"Regno Unito",en:"United Kingdom",de:"Vereinigtes Königreich"},CZ:{it:"Repubblica Ceca",en:"Czech Republic",de:"Tschechien"},MK:{it:"Macedonia del Nord",en:"North Macedonia",de:"Nordmazedonien"},RO:{it:"Romania",en:"Romania",de:"Rumänien"},RU:{it:"Russia",en:"Russia",de:"Russland"},SM:{it:"San Marino",en:"San Marino",de:"San Marino"},RS:{it:"Serbia",en:"Serbia",de:"Serbien"},SK:{it:"Slovacchia",en:"Slovakia",de:"Slowakei"},SI:{it:"Slovenia",en:"Slovenia",de:"Slowenien"},ES:{it:"Spagna",en:"Spain",de:"Spanien"},SE:{it:"Svezia",en:"Sweden",de:"Schweden"},CH:{it:"Svizzera",en:"Switzerland",de:"Schweiz"},TR:{it:"Turchia",en:"Turkey",de:"Türkei"},UA:{it:"Ucraina",en:"Ukraine",de:"Ukraine"},HU:{it:"Ungheria",en:"Hungary",de:"Ungarn"},VA:{it:"Città del Vaticano",en:"Vatican City",de:"Vatikanstadt"}};
 const LANGS = {it:{it:"Italiano",en:"Italian",de:"Italienisch"},en:{it:"Inglese",en:"English",de:"Englisch"},de:{it:"Tedesco",en:"German",de:"Deutsch"},fr:{it:"Francese",en:"French",de:"Französisch"},es:{it:"Spagnolo",en:"Spanish",de:"Spanisch"}};
 const CERTS = ["DOP","DOCG","IGP","Bio"];
 
@@ -1755,16 +1756,15 @@ function openProduct(e,i){
 function reqForm(e,kind,prodName){
   const slot = document.getElementById("m-form");
   track("richiesta_aperta",{stand:e.id});
-  const cs = Object.keys(COUNTRIES).sort((a,b)=>COUNTRIES[a][lang].localeCompare(COUNTRIES[b][lang]));
+  const cs = Object.keys(EU_ALL).sort((a,b)=>EU_ALL[a][lang].localeCompare(EU_ALL[b][lang],lang));
   slot.innerHTML = `<form class="card" id="r-form" novalidate>
     <h3>${t("r.titleC",esc(e.n))}</h3>
     <div class="two">
-      <div class="field"><label for="r-name">${t("r.name")}</label><input id="r-name" required><p class="err">${t("err.req")}</p></div>
-      <div class="field"><label for="r-co">${t("r.co")}</label><input id="r-co" required><p class="err">${t("err.req")}</p></div>
+      <div class="field" style="grid-column:1/-1"><label for="r-co">${t("r.co")}</label><input id="r-co" required><p class="err">${t("err.req")}</p></div>
     </div>
     <div class="two">
       <div class="field"><label for="r-type">${t("r.type")}</label><select id="r-type" required><option value="">${t("sel")}</option>${t("r.types").map(x=>`<option>${x}</option>`).join("")}</select><p class="err">${t("err.req")}</p></div>
-      <div class="field"><label for="r-country">${t("r.country")}</label><select id="r-country" required><option value="">${t("sel")}</option>${cs.map(c=>`<option value="${c}">${COUNTRIES[c][lang]}</option>`).join("")}</select><p class="err">${t("err.req")}</p></div>
+      <div class="field"><label for="r-country">${t("r.country")}</label><select id="r-country" required><option value="">${t("sel")}</option>${cs.map(c=>`<option value="${c}">${EU_ALL[c][lang]}</option>`).join("")}</select><p class="err">${t("err.req")}</p></div>
     </div>
     <div class="field"><label for="r-mail">${t("ex.mail")}</label><input id="r-mail" type="email" required><p class="err">${t("err.mail")}</p></div>
     <div class="field"><label for="r-msg">${t("r.msg")}</label><textarea id="r-msg" placeholder="${t("r.ph")}"></textarea></div>
@@ -1774,15 +1774,15 @@ function reqForm(e,kind,prodName){
   const f = document.getElementById("r-form");
   f.querySelector(".note").textContent = {en:"Your request goes to the Mercatale team, who will reply by email. By sending it you accept our privacy notice.",de:"Ihre Anfrage geht an das Mercatale-Team, das Ihnen per E-Mail antwortet. Mit dem Absenden akzeptieren Sie unsere Datenschutzhinweise.",it:"La richiesta arriva al team Mercatale, che ti risponde via email. Inviandola accetti l'informativa privacy."}[lang];
   if(prodName) f["r-msg"].value = t("pd.msg",prodName);
-  document.getElementById("r-name").focus();
+  document.getElementById("r-co").focus();
   slot.scrollIntoView({block:"nearest"});
   f.addEventListener("submit",async ev=>{
     ev.preventDefault();
     if(!validate(f)) return;
-    const sent = await sendMail(`Mercatale: richiesta buyer per ${e.n} (${e.id})`,{"Tipo richiesta":prodName?`Prodotto: ${prodName}`:"Contatto azienda","Stand":`${e.n} (${e.id})`,"Nome":f["r-name"].value,"Azienda":f["r-co"].value,"Tipo di buyer":f["r-type"].value,"Paese":(COUNTRIES[f["r-country"].value]||{}).it||f["r-country"].value,"Email":f["r-mail"].value,"Messaggio":f["r-msg"].value},f["r-mail"].value,f);
+    const sent = await sendMail(`Mercatale: richiesta buyer per ${e.n} (${e.id})`,{"Tipo richiesta":prodName?`Prodotto: ${prodName}`:"Contatto azienda","Stand":`${e.n} (${e.id})`,"Azienda":f["r-co"].value,"Tipo di buyer":f["r-type"].value,"Paese":(EU_ALL[f["r-country"].value]||{}).it||f["r-country"].value,"Email":f["r-mail"].value,"Messaggio":f["r-msg"].value},f["r-mail"].value,f);
     if(!sent) return;
     track("richiesta_inviata",{stand:e.id,categoria:e.cat,paese:f["r-country"].value,tipo:f["r-type"].value});
-    const rec = {stand:e.id,kind,name:f["r-name"].value,company:f["r-co"].value,type:f["r-type"].value,country:f["r-country"].value,email:f["r-mail"].value,msg:f["r-msg"].value,at:new Date().toISOString()};
+    const rec = {stand:e.id,kind,company:f["r-co"].value,type:f["r-type"].value,country:f["r-country"].value,email:f["r-mail"].value,msg:f["r-msg"].value,at:new Date().toISOString()};
     try{ const a = JSON.parse(localStorage.getItem("vi-requests")||"[]"); a.push(rec); localStorage.setItem("vi-requests",JSON.stringify(a)); }catch(err){}
     slot.innerHTML = `<div class="ok" role="status" tabindex="-1" id="r-ok"><h3>${t("r.ok.t")}</h3><p>${t("r.ok",esc(e.n))}</p></div>`;
     document.getElementById("r-ok").focus();
@@ -1817,19 +1817,30 @@ document.addEventListener("keydown",e=>{
 
 
 const MAIL_TO="mercatale.fiera@gmail.com";
-const SEND_TXT={it:["Invio in corso…","Invio non riuscito. Riprova oppure scrivici a "],en:["Sending…","Sending failed. Please try again or email us at "],de:["Wird gesendet…","Senden fehlgeschlagen. Bitte erneut versuchen oder schreiben Sie an "]};
+const W3F_KEY="1f1d5f53-db67-43fa-bc77-61e48a804bd0";
+const SEND_TXT={it:["Invio in corso…","Invio non riuscito. Riprova oppure scrivici a ","Invia con la tua email (già compilata)"],en:["Sending…","Sending failed. Please try again or email us at ","Send with your email app (pre-filled)"],de:["Wird gesendet…","Senden fehlgeschlagen. Bitte erneut versuchen oder schreiben Sie an ","Mit Ihrem E-Mail-Programm senden (ausgefüllt)"]};
 async function sendMail(subject,data,reply,f){
   const btn=f.querySelector('button[type="submit"]'); const old=btn.textContent; btn.disabled=true; btn.textContent=SEND_TXT[lang][0];
   let err=f.querySelector(".senderr"); if(err) err.remove();
   try{
-    const r=await fetch("https://formsubmit.co/ajax/"+MAIL_TO,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},
-      body:JSON.stringify(Object.assign({_subject:subject,_template:"table",_captcha:"false",_replyto:reply},data,{Lingua:lang,Pagina:location.href,Data:new Date().toLocaleString("it-IT")}))});
+    const ctl=new AbortController(); const tm=setTimeout(()=>ctl.abort(),9000);
+    const extra={Lingua:lang,Pagina:location.href,Data:new Date().toLocaleString("it-IT")};
+    const r = W3F_KEY
+      ? await fetch("https://api.web3forms.com/submit",{method:"POST",signal:ctl.signal,headers:{"Content-Type":"application/json","Accept":"application/json"},
+          body:JSON.stringify(Object.assign({access_key:W3F_KEY,subject:subject,from_name:"Mercatale",replyto:reply},data,extra))})
+      : await fetch("https://formsubmit.co/ajax/"+MAIL_TO,{method:"POST",signal:ctl.signal,headers:{"Content-Type":"application/json","Accept":"application/json"},
+          body:JSON.stringify(Object.assign({_subject:subject,_template:"table",_captcha:"false",_replyto:reply},data,extra))});
+    clearTimeout(tm);
     const j=await r.json().catch(()=>({})); if(!r.ok || String(j.success)==="false") throw new Error(j.message||r.status);
     return true;
   }catch(e){
+    try{ console.warn("Mercatale form:", e && e.message); }catch(_){}
     btn.disabled=false; btn.textContent=old;
+    const body=Object.entries(data).map(([k,v])=>k+": "+(v||"")).join("\n");
+    const mt="mailto:"+MAIL_TO+"?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
     const p=document.createElement("p"); p.className="senderr"; p.style.cssText="color:#B3261E;font-weight:700;margin-top:10px";
-    p.innerHTML=esc(SEND_TXT[lang][1])+'<a href="mailto:'+MAIL_TO+'">'+MAIL_TO+'</a>'; f.appendChild(p); return false;
+    p.innerHTML=esc(SEND_TXT[lang][1])+'<a href="mailto:'+MAIL_TO+'">'+MAIL_TO+'</a><br><a class="btn ghost small" style="margin-top:8px;display:inline-block" href="'+mt+'">'+esc(SEND_TXT[lang][2])+'</a>';
+    f.appendChild(p); return false;
   }
 }
 /* ---------- exhibitor form ---------- */
