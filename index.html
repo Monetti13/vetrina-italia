@@ -806,8 +806,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 .field input,.field select{width:100%;height:44px;border:1px solid var(--line);border-radius:10px;padding:0 12px;background:#FBFCFB}
 .field input:focus,.field select:focus{border-color:var(--bottle);outline:none;box-shadow:0 0 0 3px rgba(30,91,71,.18)}
 .search{position:relative}
-.search svg{position:absolute;left:12px;bottom:13px;pointer-events:none;color:var(--ink-2)}
-.search input{padding-left:38px}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:1;pointer-events:none;color:var(--ink-2)}
+.search input{padding-left:38px;padding-right:96px} .qwrap{position:relative} .gobtn{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;border-radius:9px;background:#1E5B47;color:#fff;font:inherit;font-weight:700;font-size:15px;padding:0 18px;height:calc(100% - 12px);cursor:pointer} .gobtn:hover{background:#174837}
 .certs{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .certs .lbl{font-size:13px;font-weight:700;color:var(--ink-2);margin-right:4px}
 .chip{border:1px solid var(--line);background:#FBFCFB;border-radius:999px;padding:6px 12px;font-size:14px;font-weight:700;cursor:pointer}
@@ -1017,8 +1017,7 @@ section[id]{scroll-margin-top:72px}
       <div class="toolbar" id="toolbar">
         <div class="field search">
           <label for="q" data-i18n="f.search"></label>
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-          <input id="q" type="search" autocomplete="off">
+          <div class="qwrap"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20l-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><input id="q" type="search" autocomplete="off" enterkeyhint="search"><button type="button" class="gobtn" id="go" data-i18n="f.go"></button></div>
         </div>
         <div class="row-mobile">
           <button type="button" class="btn ghost small filters-toggle" id="ftoggle" aria-expanded="false" aria-controls="toolbar"></button>
@@ -1358,7 +1357,7 @@ const T = {
   "hero.lead":"Trova produttori selezionati regione per regione e contattali direttamente. Noi facciamo le presentazioni: prezzi e ordini restano tra voi.",
   "hero.cta1":"Esplora la fiera","hero.cta2":"Esponi la tua azienda","hero.alt":"Una fiera del food italiano in una piazza storica: banchi di vino, olio, formaggi, salumi, pasta, dolci, conserve e caffè","hero.video":"Video: come funziona Mercatale, 45 secondi",
   "facts":(n,r,c)=>`<strong>${n} espositori</strong> da ${r} regioni, già presenti in ${c} Paesi europei.`,
-  "f.search":"Cerca un'azienda o un prodotto","f.cat":"Padiglione","f.reg":"Regione","f.exp":"Esporta già in","f.moq":"Ordine minimo","f.certs":"Certificazioni","f.reset":"Azzera filtri",
+  "f.search":"Cerca un'azienda o un prodotto","f.cat":"Padiglione","f.reg":"Regione","f.exp":"Esporta già in","f.moq":"Ordine minimo","f.certs":"Certificazioni","f.reset":"Azzera filtri","f.go":"Cerca",
   "f.all":"Tutti","f.allR":"Tutte le regioni","f.allC":"Tutti i Paesi","moq.any":"Qualsiasi","moq.10":"Fino a 10 cartoni","moq.25":"Fino a 25 cartoni","moq.50":"Fino a 50 cartoni",
   "f.toggle":n=>n?`Filtri (${n})`:"Filtri","count":n=>`<strong>${n}</strong> ${n===1?"stand":"stand"}`,
   "empty.t":"Nessuno stand con questi filtri","empty.p":"Togli un filtro o azzera la ricerca per vedere altri espositori.",
@@ -1394,7 +1393,7 @@ const T = {
   "hero.lead":"Find selected producers region by region and contact them directly. We make the introductions: prices and orders stay between you.",
   "hero.cta1":"Explore the fair","hero.cta2":"Exhibit your company","hero.alt":"An Italian food fair in a historic piazza: stalls with wine, olive oil, cheese, cured meats, pasta, sweets, preserves and coffee","hero.video":"Video: how Mercatale works, 45 seconds",
   "facts":(n,r,c)=>`<strong>${n} exhibitors</strong> from ${r} regions, already selling in ${c} European countries.`,
-  "f.search":"Search a company or product","f.cat":"Pavilion","f.reg":"Region","f.exp":"Already exports to","f.moq":"Minimum order","f.certs":"Certifications","f.reset":"Clear filters",
+  "f.search":"Search a company or product","f.cat":"Pavilion","f.reg":"Region","f.exp":"Already exports to","f.moq":"Minimum order","f.certs":"Certifications","f.reset":"Clear filters","f.go":"Search",
   "f.all":"All","f.allR":"All regions","f.allC":"All countries","moq.any":"Any","moq.10":"Up to 10 cases","moq.25":"Up to 25 cases","moq.50":"Up to 50 cases",
   "f.toggle":n=>n?`Filters (${n})`:"Filters","count":n=>`<strong>${n}</strong> ${n===1?"stand":"stands"}`,
   "empty.t":"No stands match these filters","empty.p":"Remove a filter or clear the search to see more exhibitors.",
@@ -1430,7 +1429,7 @@ const T = {
   "hero.lead":"Finden Sie ausgewählte Erzeuger Region für Region und kontaktieren Sie sie direkt. Wir stellen den Kontakt her: Preise und Bestellungen bleiben zwischen Ihnen.",
   "hero.cta1":"Messe erkunden","hero.cta2":"Als Aussteller bewerben","hero.alt":"Eine italienische Food-Messe auf einer historischen Piazza: Stände mit Wein, Olivenöl, Käse, Wurstwaren, Pasta, Süßem, Konserven und Kaffee","hero.video":"Video: So funktioniert Mercatale, 45 Sekunden",
   "facts":(n,r,c)=>`<strong>${n} Aussteller</strong> aus ${r} Regionen, bereits in ${c} europäischen Ländern vertreten.`,
-  "f.search":"Firma oder Produkt suchen","f.cat":"Halle","f.reg":"Region","f.exp":"Exportiert bereits nach","f.moq":"Mindestbestellung","f.certs":"Zertifizierungen","f.reset":"Filter zurücksetzen",
+  "f.search":"Firma oder Produkt suchen","f.cat":"Halle","f.reg":"Region","f.exp":"Exportiert bereits nach","f.moq":"Mindestbestellung","f.certs":"Zertifizierungen","f.reset":"Filter zurücksetzen","f.go":"Suchen",
   "f.all":"Alle","f.allR":"Alle Regionen","f.allC":"Alle Länder","moq.any":"Beliebig","moq.10":"Bis 10 Kartons","moq.25":"Bis 25 Kartons","moq.50":"Bis 50 Kartons",
   "f.toggle":n=>n?`Filter (${n})`:"Filter","count":n=>`<strong>${n}</strong> ${n===1?"Stand":"Stände"}`,
   "empty.t":"Keine Stände mit diesen Filtern","empty.p":"Entfernen Sie einen Filter oder leeren Sie die Suche, um weitere Aussteller zu sehen.",
@@ -1602,7 +1601,7 @@ function resetAll(){
 
 document.getElementById("q").addEventListener("input",e=>{ state.q=e.target.value; apply(); });
 ["cat","reg","exp","moq"].forEach(k=>document.getElementById("f-"+k).addEventListener("change",e=>{ state[k]=e.target.value; apply(); if(e.target.value) track("filtro",{tipo:k,valore:e.target.value}); }));
-document.getElementById("reset").onclick = resetAll;
+document.getElementById("reset").onclick = resetAll; function goSearch(){ state.q=document.getElementById("q").value; apply(); document.getElementById("q").blur(); const m=document.getElementById("map"); setTimeout(()=>{ m.scrollIntoView({behavior:"smooth",block:"center"}); map.invalidateSize({pan:false}); },50); if(state.q) track("cerca",{testo:state.q}); } document.getElementById("go").onclick = goSearch; document.getElementById("q").addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); goSearch(); } });
 document.getElementById("ftoggle").onclick = ()=>{ const tb=document.getElementById("toolbar"); const on=tb.classList.toggle("show"); document.getElementById("ftoggle").setAttribute("aria-expanded",on); };
 
 /* ---------- pavilions ---------- */
