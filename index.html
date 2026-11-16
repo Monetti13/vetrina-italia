@@ -1517,6 +1517,34 @@ dl.factsheet>div:last-child{border-bottom:0}
 @keyframes fq-swing{20%{transform:rotate(28deg)}50%{transform:rotate(-18deg)}80%{transform:rotate(8deg)}}
 @keyframes fq-flip{from{transform:rotateX(180deg)}}
 @media (max-width:860px){.live{margin:0 12px -26px}.fq-i{width:34px;height:34px}}
+
+/* ================= v6 fixes: story never spills on short screens ================= */
+.price .pv{white-space:nowrap;font-size:clamp(34px,3.8vw,54px)}
+.price-wrap{padding-top:24px}
+@media (min-width:861px){
+  .js .story.live .story-pin{overflow:hidden}
+  .js .story.live .story-grid{max-height:100%}
+}
+@media (min-width:861px) and (max-height:900px){
+  .js .story.live .story-steps{margin-top:18px;gap:2px}
+  .js .story.live .story-steps li{padding:10px 14px}
+  .js .story.live .story-steps h3{font-size:19px}
+  .js .story.live .story-steps p{font-size:15px;line-height:1.4}
+  .js .story.live h2{font-size:clamp(28px,3.2vw,42px)}
+  .js .story.live .story-stage{height:min(480px,calc(100svh - 150px))}
+}
+@media (min-width:861px) and (max-height:760px){
+  .js .story.live .story-steps li:not(:is([data-x])){grid-template-columns:36px 1fr;gap:2px 12px}
+  .js .story.live .story-steps li:before{width:36px;height:36px;font-size:16px}
+  .js .story.live .story-steps p{font-size:14px}
+  .js .story.live .story-steps h3{font-size:17px}
+  .js .story.live h2{font-size:30px}
+  .js .story.live .eyebrow{margin-bottom:6px}
+  .js .story.live .story-bar{margin-top:10px}
+  .scene{padding:14px}
+  .radar{width:min(320px,100%)}
+  .mock{padding:14px;gap:8px}.mock .f b{height:36px;line-height:36px}
+}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Prendete una commissione sulle vendite?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mercatale fa solo da ponte tra te e il buyer. L'unico costo è lo stand, dopo i 3 mesi gratuiti."}}, {"@type": "Question", "name": "Chi gestisce spedizioni e pagamenti?", "acceptedAnswer": {"@type": "Answer", "text": "Tu, come fai oggi. Ti accordi direttamente con il buyer su quantità, prezzi e consegne."}}, {"@type": "Question", "name": "Devo preparare io testi e foto?", "acceptedAnswer": {"@type": "Answer", "text": "No. Ci mandi listino, logo e qualche foto: lo stand lo compiliamo noi e lo approvi prima che vada online."}}, {"@type": "Question", "name": "Posso avere più linee o marchi?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Se hai più marchi possiamo aprire uno stand per ciascuno, così il buyer trova subito quello che cerca."}}, {"@type": "Question", "name": "Cosa succede dopo i 3 mesi?", "acceptedAnswer": {"@type": "Answer", "text": "Ti chiediamo se vuoi continuare a 49 € al mese. Se non confermi per iscritto, lo stand si chiude e non paghi nulla."}}, {"@type": "Question", "name": "Non esporto ancora: posso partecipare?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Molti buyer cercano proprio piccoli produttori nuovi. Ti aiutiamo a indicare formati, ordine minimo e tempi di consegna, le prime cose che un buyer chiede."}}]}</script>
 </head>
@@ -2096,6 +2124,8 @@ window.FX = (function(){
   /* ---------- story (scroll-driven) ---------- */
   function story(){
     const s=$("#produttori"); if(!s || RM) return;
+    const desk=window.matchMedia("(min-width:861px)").matches;
+    if(desk && innerHeight<600) return;
     s.classList.add("live"); s.dataset.step="0";
     let ticking=false, cur=-1;
     function upd(){ ticking=false; const r=s.getBoundingClientRect(), vh=innerHeight, span=r.height-(vh-64);
