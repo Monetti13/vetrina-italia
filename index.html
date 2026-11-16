@@ -1545,6 +1545,9 @@ dl.factsheet>div:last-child{border-bottom:0}
   .radar{width:min(320px,100%)}
   .mock{padding:14px;gap:8px}.mock .f b{height:36px;line-height:36px}
 }
+/* v7: center the (scaled) scene even when its natural size is larger than the stage */
+.scene{place-content:center}
+@media (max-width:860px){.mock{width:300px}.sc1 .stack{width:300px}.radar{width:300px}.chat{width:330px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Prendete una commissione sulle vendite?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mercatale fa solo da ponte tra te e il buyer. L'unico costo è lo stand, dopo i 3 mesi gratuiti."}}, {"@type": "Question", "name": "Chi gestisce spedizioni e pagamenti?", "acceptedAnswer": {"@type": "Answer", "text": "Tu, come fai oggi. Ti accordi direttamente con il buyer su quantità, prezzi e consegne."}}, {"@type": "Question", "name": "Devo preparare io testi e foto?", "acceptedAnswer": {"@type": "Answer", "text": "No. Ci mandi listino, logo e qualche foto: lo stand lo compiliamo noi e lo approvi prima che vada online."}}, {"@type": "Question", "name": "Posso avere più linee o marchi?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Se hai più marchi possiamo aprire uno stand per ciascuno, così il buyer trova subito quello che cerca."}}, {"@type": "Question", "name": "Cosa succede dopo i 3 mesi?", "acceptedAnswer": {"@type": "Answer", "text": "Ti chiediamo se vuoi continuare a 49 € al mese. Se non confermi per iscritto, lo stand si chiude e non paghi nulla."}}, {"@type": "Question", "name": "Non esporto ancora: posso partecipare?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Molti buyer cercano proprio piccoli produttori nuovi. Ti aiutiamo a indicare formati, ordine minimo e tempi di consegna, le prime cose che un buyer chiede."}}]}</script>
 </head>
@@ -2133,6 +2136,12 @@ window.FX = (function(){
       s.style.setProperty("--p",p.toFixed(4)); if(st!==cur){ cur=st; s.dataset.step=String(st); } }
     addEventListener("scroll",()=>{ if(!ticking){ ticking=true; requestAnimationFrame(upd); } },{passive:true});
     addEventListener("resize",upd); upd();
+    /* scale each scene so it always fits its stage (short phone screens) */
+    const stage=s.querySelector(".story-stage");
+    function fit(){ if(!stage) return; const H=stage.clientHeight-28, W=stage.clientWidth-28; if(H<=0) return;
+      s.querySelectorAll(".scene").forEach(sc=>{ const c=sc.firstElementChild; if(!c) return; c.style.transform=""; c.style.transformOrigin="50% 50%";
+        const k=Math.min(1,H/Math.max(1,c.offsetHeight),W/Math.max(1,c.offsetWidth)); if(k<1) c.style.transform="scale("+k.toFixed(3)+")"; }); }
+    fit(); addEventListener("resize",fit); if(document.fonts) document.fonts.ready.then(fit); setTimeout(fit,600);
   }
 
   /* ---------- page chrome: progress, parallax, video, magnetic, cursor ---------- */
