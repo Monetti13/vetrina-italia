@@ -2941,7 +2941,7 @@ function renderByDone(){
   slot.innerHTML = `<div class="ok" role="status" tabindex="-1" id="by-ok"><h3>${t("by.ok.t")}</h3><p>${t("by.ok")}</p></div>`;
 }
 /* ---------- launch places: update these two numbers ---------- */
-const SEATS_TAKEN = 20, SEATS_TOTAL = 30;
+const SEATS_TAKEN = 22, SEATS_TOTAL = 30;
 function renderSeats(){
   document.getElementById("seats-num").textContent = t("seats.n",SEATS_TAKEN,SEATS_TOTAL);
   document.getElementById("seats-left").textContent = t("seats.left",Math.max(0,SEATS_TOTAL-SEATS_TAKEN));
