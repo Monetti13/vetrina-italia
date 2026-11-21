@@ -2874,6 +2874,31 @@ document.addEventListener("keydown",e=>{
 });
 
 
+
+/* ---------- posti esauriti: testi e festa all'apertura ---------- */
+Object.assign(T.it,{"seats.left":n=>n>0?`${n===1?"Ne resta":"Ne restano"} ${n}.`:"Tutti i posti di lancio sono assegnati. La fiera aprirà a breve: scrivici per entrare in lista d'attesa.",
+ "seats.cta":"Entra in lista d'attesa","sticky":"Entra in lista d'attesa","ex.formt":"Entra in lista d'attesa",
+ "offer":"<strong>Posti di lancio esauriti</strong>Le prime 30 aziende sono in fiera. La fiera aprirà a breve: lasciaci i tuoi dati per la lista d'attesa.",
+ "hero.c":"La fiera apre a breve.","hero.cta1":"Entra in lista d'attesa","nav.exhibit":"Lista d'attesa","full.t":"30 posti su 30: tutti assegnati!","full.p":"Grazie alle prime 30 aziende. La fiera aprirà a breve.","full.x":"Chiudi"});
+Object.assign(T.en,{"seats.left":n=>n>0?`${n} left.`:"All launch places are taken. The fair opens soon: write to us to join the waiting list.",
+ "seats.cta":"Join the waiting list","sticky":"Join the waiting list","ex.formt":"Join the waiting list",
+ "offer":"<strong>Launch places are full</strong>The first 30 companies are in. The fair opens soon: <a href='#esponi'>join the waiting list</a>.",
+ "hero.cta2":"Join the waiting list","nav.exhibit":"Waiting list","full.t":"30 of 30: all places taken!","full.p":"Thanks to the first 30 companies. The fair opens soon.","full.x":"Close"});
+Object.assign(T.de,{"seats.left":n=>n>0?`Noch ${n} frei.`:"Alle Startplätze sind vergeben. Die Messe öffnet in Kürze: Schreiben Sie uns für die Warteliste.",
+ "seats.cta":"Auf die Warteliste","sticky":"Auf die Warteliste","ex.formt":"Auf die Warteliste",
+ "offer":"<strong>Startplätze vergeben</strong>Die ersten 30 Unternehmen sind dabei. Die Messe öffnet in Kürze: <a href='#esponi'>auf die Warteliste</a>.",
+ "hero.cta2":"Auf die Warteliste","nav.exhibit":"Warteliste","full.t":"30 von 30: alle Plätze vergeben!","full.p":"Danke an die ersten 30 Unternehmen. Die Messe öffnet in Kürze.","full.x":"Schließen"});
+function showFull(){
+  if(SEATS_TAKEN<SEATS_TOTAL) return;
+  const seatsEl=document.querySelector(".hero .seats"); if(!seatsEl) return;
+  let b=document.getElementById("full-banner");
+  if(!b){ b=document.createElement("div"); b.id="full-banner"; b.setAttribute("role","status");
+    b.style.cssText="position:relative;z-index:2;margin:0 0 14px;background:#0C2622;color:#fff;border:2px solid #3DFFB0;border-radius:18px;padding:16px 22px;display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px";
+    seatsEl.parentNode.insertBefore(b,seatsEl);
+    if("IntersectionObserver" in window){ const io=new IntersectionObserver(es=>{ if(es.some(e=>e.isIntersecting)){ io.disconnect(); setTimeout(()=>{ try{ FX.confetti(); }catch(e){} },250); } },{threshold:0.6}); io.observe(seatsEl); }
+  }
+  b.innerHTML=`<strong style="font:800 21px/1.2 var(--display,system-ui);color:#3DFFB0">${esc(t("full.t"))}</strong><span style="font-size:16px;line-height:1.4">${esc(t("full.p"))}</span>`;
+}
 const MAIL_TO="info@mercatale.eu";
 const W3F_KEY="1f1d5f53-db67-43fa-bc77-61e48a804bd0";
 const SEND_TXT={it:["Invio in corso…","Invio non riuscito. Riprova oppure scrivici a ","Invia con la tua email (già compilata)"],en:["Sending…","Sending failed. Please try again or email us at ","Send with your email app (pre-filled)"],de:["Wird gesendet…","Senden fehlgeschlagen. Bitte erneut versuchen oder schreiben Sie an ","Mit Ihrem E-Mail-Programm senden (ausgefüllt)"]};
@@ -2908,7 +2933,7 @@ function bindExForm(){
     ev.preventDefault();
     if(!validate(f)) return;
     const co = f["e-co"].value.trim();
-    const sent = await sendMail(`Mercatale: nuova richiesta stand, ${co}`,{"Nome":f["e-name"].value.trim(),"Azienda":co,"Email":f["e-mail"].value,"Sito o pagina social":f["e-site"].value},f["e-mail"].value,f);
+    const sent = await sendMail(`Mercatale: ${SEATS_TAKEN>=SEATS_TOTAL?"lista d'attesa":"nuova richiesta stand"}, ${co}`,{"Nome":f["e-name"].value.trim(),"Azienda":co,"Email":f["e-mail"].value,"Sito o pagina social":f["e-site"].value},f["e-mail"].value,f);
     if(!sent) return;
     track("candidatura_espositore",{}); FX.confetti();
     try{ const a = JSON.parse(localStorage.getItem("vi-applications")||"[]"); a.push({name:f["e-name"].value.trim(),company:co,email:f["e-mail"].value,site:f["e-site"].value,at:new Date().toISOString()}); localStorage.setItem("vi-applications",JSON.stringify(a)); }catch(err){}
@@ -2942,7 +2967,7 @@ function renderByDone(){
   slot.innerHTML = `<div class="ok" role="status" tabindex="-1" id="by-ok"><h3>${t("by.ok.t")}</h3><p>${t("by.ok")}</p></div>`;
 }
 /* ---------- launch places: update these two numbers ---------- */
-const SEATS_TAKEN = 28, SEATS_TOTAL = 30;
+const SEATS_TAKEN = 30, SEATS_TOTAL = 30;
 function renderSeats(){
   document.getElementById("seats-num").textContent = t("seats.n",SEATS_TAKEN,SEATS_TOTAL);
   document.getElementById("seats-left").textContent = t("seats.left",Math.max(0,SEATS_TOTAL-SEATS_TAKEN));
@@ -2975,7 +3000,7 @@ c1.href=prod?"#esponi":"#esplora"; c2.href=prod?"#come-funziona":"#esponi";
   
   document.getElementById("hero-video").setAttribute("aria-label", t("hero.video"));
   document.getElementById("map").setAttribute("aria-label", {it:"Mappa degli espositori",en:"Exhibitor map",de:"Karte der Aussteller"}[lang]);
-  renderSeats(); renderFaq();
+  renderSeats(); renderFaq(); showFull();
   fillSelects(); renderPavs(); renderLegend(); apply();
   { const bs = document.getElementById("by-slot"); if(bs && bs.dataset.done) renderByDone(); }
   if(openId) openStand(openId);
