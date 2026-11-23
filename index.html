@@ -1550,6 +1550,17 @@ dl.factsheet>div:last-child{border-bottom:0}
 @media (max-width:860px){.mock{width:300px}.sc1 .stack{width:300px}.radar{width:300px}.chat{width:330px}}
 </style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Prendete una commissione sulle vendite?", "acceptedAnswer": {"@type": "Answer", "text": "No. Mercatale fa solo da ponte tra te e il buyer. L'unico costo è lo stand, dopo i 3 mesi gratuiti."}}, {"@type": "Question", "name": "Chi gestisce spedizioni e pagamenti?", "acceptedAnswer": {"@type": "Answer", "text": "Tu, come fai oggi. Ti accordi direttamente con il buyer su quantità, prezzi e consegne."}}, {"@type": "Question", "name": "Devo preparare io testi e foto?", "acceptedAnswer": {"@type": "Answer", "text": "No. Ci mandi listino, logo e qualche foto: lo stand lo compiliamo noi e lo approvi prima che vada online."}}, {"@type": "Question", "name": "Posso avere più linee o marchi?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Se hai più marchi possiamo aprire uno stand per ciascuno, così il buyer trova subito quello che cerca."}}, {"@type": "Question", "name": "Cosa succede dopo i 3 mesi?", "acceptedAnswer": {"@type": "Answer", "text": "Ti chiediamo se vuoi continuare a 49 € al mese. Se non confermi per iscritto, lo stand si chiude e non paghi nulla."}}, {"@type": "Question", "name": "Non esporto ancora: posso partecipare?", "acceptedAnswer": {"@type": "Answer", "text": "Sì. Molti buyer cercano proprio piccoli produttori nuovi. Ti aiutiamo a indicare formati, ordine minimo e tempi di consegna, le prime cose che un buyer chiede."}}]}</script>
+<style id="lingue-css">
+.lang{position:relative;padding:0}
+.lang select{appearance:none;-webkit-appearance:none;border:0;background:transparent;font:inherit;font-weight:700;font-size:14px;color:var(--ink);padding:7px 30px 7px 14px;border-radius:999px;cursor:pointer;max-width:170px}
+.lang::after{content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;border-right:2px solid var(--ink-2);border-bottom:2px solid var(--ink-2);transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.lang select:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tr-note{font-size:13px;color:var(--ink-2);margin:6px 0 0}
+.tr-auto{flex-basis:100%;font-size:13px;opacity:.85;margin-top:6px}
+.top nav a{white-space:nowrap}
+@media (max-width:1200px){.top .wrap{gap:12px}.top nav{gap:0}.top nav a{padding:8px 8px;font-size:14px}}
+@media (max-width:1060px){.top nav a{padding:8px 5px;font-size:13px}.lang select{max-width:128px;padding-left:10px}}
+</style>
 </head>
 <body>
 <div class="fx-progress" aria-hidden="true"></div>
@@ -1565,11 +1576,7 @@ dl.factsheet>div:last-child{border-bottom:0}
       <a href="#domande" data-i18n="nav.faq"></a>
       <a href="#esponi" data-i18n="nav.exhibit" data-umami-event="clic_esponi" data-umami-event-dove="menu"></a>
     </nav>
-    <div class="lang" role="group" aria-label="Lingua / Language">
-      <button type="button" data-lang="it" aria-pressed="true">IT</button>
-      <button type="button" data-lang="en" aria-pressed="false">EN</button>
-      <button type="button" data-lang="de" aria-pressed="false">DE</button>
-    </div>
+    <div class="lang"><select id="lang-sel" aria-label="Lingua / Language"></select></div>
   </div>
 </header>
 
@@ -1737,6 +1744,7 @@ dl.factsheet>div:last-child{border-bottom:0}
   <div class="wrap">
     <span class="fcontact"><a href="mailto:info@mercatale.eu">info@mercatale.eu</a><a href="https://www.instagram.com/mercatale_/" rel="noopener">Instagram @mercatale_</a></span>
     <span><button type="button" class="pv-link" id="pv-open" data-i18n="foot.pv"></button> · Mercatale, 2026</span>
+    <span class="tr-auto" id="tr-auto" hidden></span>
   </div>
 </footer>
 <a class="sticky-cta" id="sticky-cta" href="#esponi" data-i18n="sticky" data-umami-event="clic_esponi" data-umami-event-dove="barra"></a>
@@ -1814,7 +1822,7 @@ window.FX = (function(){
   function rotList(){
     const r = T[lang]["hero.rot"];
     if(r) return r;
-    return Object.keys(CATS).map(k=>[k, lang==="en" ? catName(k).toLowerCase() : catName(k)]);
+    return Object.keys(CATS).map(k=>[k, lang==="de" ? catName(k) : catName(k).toLowerCase()]);
   }
   function setWord(i){
     const list=rotList(), [k,w]=list[i%list.length], box=$("#h-rot");
@@ -2362,7 +2370,7 @@ const D_DE = {
 };
 const FMT_DE=[[/cartone da/g,"Karton à"],[/cassa legno da/g,"Holzkiste à"],[/circa/g,"ca."],[/pezzi/g,"Stück"],[/forma intera/gi,"ganzer Laib"],[/forma/g,"Laib"],[/spicchio/g,"Stück"],[/sottovuoto/g,"vakuumverpackt"],[/intero con osso/g,"ganz, mit Knochen"],[/vasetto/g,"Glas"],[/per ristorazione/g,"für die Gastronomie"]];
 const FMT_EN=[[/cartone da/g,"case of"],[/cassa legno da/g,"wooden case of"],[/circa/g,"approx."],[/pezzi/g,"pieces"],[/forma intera/gi,"whole wheel"],[/forma/g,"wheel"],[/spicchio/g,"wedge"],[/sottovuoto/g,"vacuum-packed"],[/intero con osso/g,"whole, bone-in"],[/vasetto/g,"jar"],[/per ristorazione/g,"for food service"],[/,(\d)/g,".$1"]];
-const fmtP = s => lang==="en" ? FMT_EN.reduce((a,[r,v])=>a.replace(r,v),s) : lang==="de" ? FMT_DE.reduce((a,[r,v])=>a.replace(r,v),s) : s;
+const fmtP = s => lang==="it" ? s : lang==="de" ? FMT_DE.reduce((a,[r,v])=>a.replace(r,v),s) : FMT_EN.reduce((a,[r,v])=>a.replace(r,v),s);
 const T = {
  it:{
   "nav.explore":"Esplora la fiera","nav.pavilions":"Padiglioni","nav.how":"Per i buyer","nav.faq":"Domande","nav.exhibit":"Richiedi lo stand",
@@ -2518,8 +2526,10 @@ Object.assign(T.en,{"live.tag":"Preview of your stand","live.ph":"Your company",
 Object.assign(T.de,{"live.tag":"Vorschau Ihres Stands","live.ph":"Ihr Unternehmen","live.sub":"Stand auf Italienisch, Englisch und Deutsch",
  "ex.seat":(n,c)=>`Wir haben Platz Nr. ${n} für ${c} vorgemerkt.`,"globe.see":"Auf dem Globus ansehen",
  "ex.back.t":"Willkommen zurück","ex.back":c=>`Die Bewerbung von ${c} liegt uns bereits vor: Ihr Stand wird vorbereitet. Wir schreiben Ihnen zur Freigabe.`});
-let lang = "it";
-try{ const s = localStorage.getItem("vi-lang"); if(s==="en"||s==="it"||s==="de") lang=s; }catch(e){}
+/* ---------- lingue ufficiali dell'Unione: it, en e de sono nella pagina, le altre arrivano da lingue.js ---------- */
+const LANG_ALL = [["bg", "Български"], ["cs", "Čeština"], ["da", "Dansk"], ["de", "Deutsch"], ["et", "Eesti"], ["el", "Ελληνικά"], ["en", "English"], ["es", "Español"], ["fr", "Français"], ["ga", "Gaeilge"], ["hr", "Hrvatski"], ["it", "Italiano"], ["lv", "Latviešu"], ["lt", "Lietuvių"], ["hu", "Magyar"], ["mt", "Malti"], ["nl", "Nederlands"], ["pl", "Polski"], ["pt", "Português"], ["ro", "Română"], ["sk", "Slovenčina"], ["sl", "Slovenščina"], ["fi", "Suomi"], ["sv", "Svenska"]];
+let lang = "it", langWant = "";
+try{ const s = localStorage.getItem("vi-lang"); if(s==="en"||s==="it"||s==="de") lang=s; else if(s && LANG_ALL.some(x=>x[0]===s)){ lang="en"; langWant=s; } }catch(e){}
 const t = (k,...a) => { const v = T[lang][k]; return typeof v === "function" ? v(...a) : v; };
 const regLabel = r => r.split("/")[0];
 const catName = k => CATS[k][lang];
@@ -2748,7 +2758,7 @@ function openStand(id,mode){
     <div class="m-body">
       <div>
         <h3>${t("m.story")}</h3>
-        <p class="story">${esc(lang==="de"?D_DE[e.id]:e.d[lang])}</p>
+        <p class="story">${esc(lang==="de"?D_DE[e.id]:e.d[lang])}</p>${T[lang]["tr.note"]?`<p class="tr-note">${esc(T[lang]["tr.note"])}</p>`:""}
         <h3>${t("m.products")}</h3>
         <ul class="prods">${e.p.map((p,i)=>`<li class="pl"><button class="prod-btn" type="button" data-pi="${i}" aria-label="${t("pd.open")}: ${esc(p[0])}"><span class="pi">${pic(`prod-${e.id}-${i}`,"",icon(e.cat,22))}</span><span><strong>${esc(p[0])}</strong><small>${esc(fmtP(p[1]))}</small></span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button></li>`).join("")}</ul>
       </div>
@@ -2830,7 +2840,7 @@ function reqForm(e,kind,prodName){
     <p class="note"></p>
   </form>`;
   const f = document.getElementById("r-form");
-  f.querySelector(".note").textContent = {en:"Your request goes to the Mercatale team, who will reply by email. By sending it you accept our privacy notice.",de:"Ihre Anfrage geht an das Mercatale-Team, das Ihnen per E-Mail antwortet. Mit dem Absenden akzeptieren Sie unsere Datenschutzhinweise.",it:"La richiesta arriva al team Mercatale, che ti risponde via email. Inviandola accetti l'informativa privacy."}[lang];
+  f.querySelector(".note").textContent = {en:"Your request goes to the Mercatale team, who will reply by email. By sending it you accept our privacy notice.",de:"Ihre Anfrage geht an das Mercatale-Team, das Ihnen per E-Mail antwortet. Mit dem Absenden akzeptieren Sie unsere Datenschutzhinweise.",it:"La richiesta arriva al team Mercatale, che ti risponde via email. Inviandola accetti l'informativa privacy."}[lang] || t("r.note");
   if(prodName) f["r-msg"].value = t("pd.msg",prodName);
   document.getElementById("r-co").focus();
   slot.scrollIntoView({block:"nearest"});
@@ -2993,7 +3003,7 @@ function bindSticky(){
 function renderText(){
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-i18n]").forEach(el=>{ el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.lang===lang));
+  { const ls=document.getElementById("lang-sel"); if(ls) ls.value=lang; }
   const regs = new Set(EX.map(e=>e.reg)).size, cs = new Set(EX.flatMap(e=>e.exp)).size;
   document.getElementById("facts").innerHTML = t("facts",EX.length,regs,cs);
   ["offer","offer2"].forEach(id=>{const o=document.getElementById(id); if(o) o.innerHTML=t("offer");});
@@ -3002,15 +3012,54 @@ c1.href=prod?"#esponi":"#esplora"; c2.href=prod?"#come-funziona":"#esponi";
     [c1,c2].forEach(a=>{ if(a.getAttribute("href")==="#esponi"){a.setAttribute("data-umami-event","clic_esponi");a.setAttribute("data-umami-event-dove","hero");} else {a.removeAttribute("data-umami-event");a.removeAttribute("data-umami-event-dove");} }); }
   
   document.getElementById("hero-video").setAttribute("aria-label", t("hero.video"));
-  document.getElementById("map").setAttribute("aria-label", {it:"Mappa degli espositori",en:"Exhibitor map",de:"Karte der Aussteller"}[lang]);
+  document.getElementById("map").setAttribute("aria-label", ({it:"Mappa degli espositori",en:"Exhibitor map",de:"Karte der Aussteller"}[lang] || t("map.aria")));
   renderSeats(); renderFaq(); showFull();
   fillSelects(); renderPavs(); renderLegend(); apply();
   { const bs = document.getElementById("by-slot"); if(bs && bs.dataset.done) renderByDone(); }
   if(openId) openStand(openId);
   const slot = document.getElementById("ex-slot"); if(slot.dataset.done) renderExDone();
   FX.text();
+  { const ta=document.getElementById("tr-auto"); if(ta){ const v=T[lang]["tr.auto"]||""; ta.textContent=v; ta.hidden=!v; } }
+  document.dispatchEvent(new CustomEvent("mercatale:lang"));
 }
-document.querySelectorAll(".lang button").forEach(b=>b.onclick=()=>{ lang=b.dataset.lang; try{localStorage.setItem("vi-lang",lang);}catch(e){} renderText(); track("lingua",{lingua:lang}); });
+let packP = null;
+function loadPack(){
+  if(!packP) packP = new Promise((ok,ko)=>{ const s=document.createElement("script"); s.src="lingue.js?v=1"; s.onload=()=>ok(); s.onerror=()=>{ packP=null; ko(); }; document.head.appendChild(s); });
+  return packP;
+}
+function installLang(x){
+  if(T[x]) return true;
+  const P = (window.MERCATALE_LINGUE||{})[x]; if(!P) return false;
+  const o = Object.assign({}, T.en, P.t), F = P.f||{}, sub = (s,a)=>String(s).replace(/\{(\d)\}/g,(m,i)=>a[i]==null?"":a[i]);
+  Object.keys(F).forEach(k=>{ o[k] = (...a)=>sub(F[k],a); });
+  if(F["f.toggle"]) o["f.toggle"] = n => n ? `${F["f.toggle"]} (${n})` : F["f.toggle"];
+  if(F["count"]) o["count"] = n => sub(F["count"],[`<strong>${n}</strong>`]);
+  if(F["seats.left"]) o["seats.left"] = n => n>0 ? sub(F["seats.left"],[n]) : (P.t["seats.left0"] || T.en["seats.left"](0));
+  if(P.faq) o["faq"] = P.faq;
+  if(P.types) o["r.types"] = P.types;
+  if(P.a && P.a.es){ o["dm.es"] = P.a.es; o["dm.esm"] = P.a.esm || o["dm.esm"]; }
+  delete o["hero.rot"];
+  T[x] = o;
+  const dn = type => { try{ return new Intl.DisplayNames([x],{type}); }catch(e){ return null; } };
+  const R = dn("region"), G = dn("language"), cap = s => s.charAt(0).toUpperCase()+s.slice(1);
+  Object.keys(CATS).forEach(k=>{ CATS[k][x] = (P.cats && P.cats[k]) || CATS[k].en; });
+  [COUNTRIES, typeof EU_ALL!=="undefined" ? EU_ALL : {}].forEach(O=>Object.keys(O).forEach(c=>{ let n=""; try{ n = R ? R.of(c) : ""; }catch(e){} O[c][x] = (n && n!==c) ? n : O[c].en; }));
+  if(typeof LANGS!=="undefined") Object.keys(LANGS).forEach(l=>{ let n=""; try{ n = G ? G.of(l) : ""; }catch(e){} LANGS[l][x] = (n && n!==l) ? cap(n) : LANGS[l].en; });
+  if(typeof SEND_TXT!=="undefined") SEND_TXT[x] = P.send || SEND_TXT.en;
+  /* i testi delle aziende non sono tradotti: nelle nuove lingue si leggono in inglese */
+  EX.forEach(e=>{ if(e.d && !e.d[x]) e.d[x] = e.d.en || e.d.it; });
+  if(typeof PD!=="undefined") Object.keys(PD).forEach(k=>{ const d=PD[k]; ["d","a"].forEach(f=>{ if(d && d[f] && !d[f][x]) d[f][x] = d[f].en || d[f].it; }); });
+  return true;
+}
+async function setLang(x){
+  if(!T[x]){ try{ await loadPack(); }catch(e){} if(!installLang(x)) x = "en"; }
+  lang = x; try{ localStorage.setItem("vi-lang",lang); }catch(e){}
+  renderText(); if(typeof track==="function") track("lingua",{lingua:lang});
+}
+{ const ls = document.getElementById("lang-sel");
+  ls.innerHTML = LANG_ALL.map(([c,n])=>`<option value="${c}" lang="${c}">${n}</option>`).join("");
+  ls.value = langWant || lang; ls.onchange = ()=>setLang(ls.value);
+  if(langWant) setLang(langWant); }
 
 bindExForm();
 try{ const a = JSON.parse(localStorage.getItem("vi-applications")||"[]"); if(a.length && a[a.length-1].company && !localStorage.getItem("vi-app-hide")){ const sl = document.getElementById("ex-slot"); sl.dataset.done = a[a.length-1].company; sl.dataset.back = "1"; } }catch(err){}
