@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Mercatale">
 <meta property="og:url" content="https://mercatale.eu/">
 <meta property="og:title" content="Mercatale, la fiera online del food e del vino italiano">
-<meta property="og:description" content="Aperta tutto l'anno. I buyer europei trovano i produttori italiani e li contattano direttamente. Prime 30 aziende: stand gratis per 3 mesi.">
+<meta property="og:description" content="Aperta tutto l'anno. I buyer europei trovano i produttori italiani e li contattano direttamente. 50 posti da socio fondatore, con vantaggi esclusivi.">
 <meta property="og:image" content="https://mercatale.eu/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -2875,19 +2875,22 @@ document.addEventListener("keydown",e=>{
 
 
 
-/* ---------- posti esauriti: testi e festa all'apertura ---------- */
-Object.assign(T.it,{"seats.left":n=>n>0?`${n===1?"Ne resta":"Ne restano"} ${n}.`:"Tutti i posti di lancio sono assegnati. La fiera aprirà a breve: scrivici per entrare in lista d'attesa.",
- "seats.cta":"Entra in lista d'attesa","sticky":"Entra in lista d'attesa","ex.formt":"Entra in lista d'attesa",
- "offer":"<strong>Posti di lancio esauriti</strong>Le prime 30 aziende sono in fiera. La fiera aprirà a breve: lasciaci i tuoi dati per la lista d'attesa.",
- "hero.c":"La fiera apre a breve.","hero.cta1":"Entra in lista d'attesa","nav.exhibit":"Lista d'attesa","full.t":"30 posti su 30: tutti assegnati!","full.p":"Grazie alle prime 30 aziende. La fiera aprirà a breve.","full.x":"Chiudi"});
-Object.assign(T.en,{"seats.left":n=>n>0?`${n} left.`:"All launch places are taken. The fair opens soon: write to us to join the waiting list.",
- "seats.cta":"Join the waiting list","sticky":"Join the waiting list","ex.formt":"Join the waiting list",
- "offer":"<strong>Launch places are full</strong>The first 30 companies are in. The fair opens soon: <a href='#esponi'>join the waiting list</a>.",
- "hero.cta2":"Join the waiting list","nav.exhibit":"Waiting list","full.t":"30 of 30: all places taken!","full.p":"Thanks to the first 30 companies. The fair opens soon.","full.x":"Close"});
-Object.assign(T.de,{"seats.left":n=>n>0?`Noch ${n} frei.`:"Alle Startplätze sind vergeben. Die Messe öffnet in Kürze: Schreiben Sie uns für die Warteliste.",
- "seats.cta":"Auf die Warteliste","sticky":"Auf die Warteliste","ex.formt":"Auf die Warteliste",
- "offer":"<strong>Startplätze vergeben</strong>Die ersten 30 Unternehmen sind dabei. Die Messe öffnet in Kürze: <a href='#esponi'>auf die Warteliste</a>.",
- "hero.cta2":"Auf die Warteliste","nav.exhibit":"Warteliste","full.t":"30 von 30: alle Plätze vergeben!","full.p":"Danke an die ersten 30 Unternehmen. Die Messe öffnet in Kürze.","full.x":"Schließen"});
+/* ---------- soci fondatori: 50 posti con vantaggi esclusivi ---------- */
+Object.assign(T.it,{"seats.left":n=>n>0?`${n===1?"Ne resta":"Ne restano"} ${n}.`:"Tutti i posti da socio fondatore sono assegnati. La fiera aprirà a breve: scrivici per entrare in lista d'attesa.",
+ "seats.tag":"Soci fondatori: vantaggi esclusivi","seats.lbl":"posti da socio fondatore già assegnati","seats.cta":"Diventa socio fondatore","seats.free":"Posto da socio fondatore libero: richiedilo",
+ "ex.formt":"Richiedi un posto da socio fondatore","price.n1":"per i 50 soci fondatori",
+ "offer":"<strong>Soci fondatori</strong>Solo 50 posti, con vantaggi esclusivi: stand gratis per 3 mesi, preparato da noi, e nessuna commissione sugli ordini. Poi 49 € al mese, disdici quando vuoi.",
+ "full.t":"50 posti su 50: tutti assegnati!","full.p":"Grazie ai 50 soci fondatori. La fiera aprirà a breve.","full.x":"Chiudi"});
+Object.assign(T.en,{"seats.left":n=>n>0?`${n} left.`:"All founding member places are taken. The fair opens soon: write to us to join the waiting list.",
+ "seats.tag":"Founding members: exclusive benefits","seats.lbl":"founding member places already taken","seats.cta":"Become a founding member","seats.free":"Free founding member place: apply for it",
+ "ex.formt":"Apply for a founding member place","price.n1":"for the 50 founding members",
+ "offer":"<strong>Founding members</strong>Only 50 places, with exclusive benefits: a free stand for 3 months, set up by us, and no commission on orders. Then €49 a month, cancel anytime. <a href='#esponi'>Apply</a>",
+ "full.t":"50 of 50: all places taken!","full.p":"Thanks to the 50 founding members. The fair opens soon.","full.x":"Close"});
+Object.assign(T.de,{"seats.left":n=>n>0?`Noch ${n} frei.`:"Alle Plätze für Gründungsmitglieder sind vergeben. Die Messe öffnet in Kürze: Schreiben Sie uns für die Warteliste.",
+ "seats.tag":"Gründungsmitglieder: exklusive Vorteile","seats.lbl":"Plätze für Gründungsmitglieder bereits vergeben","seats.cta":"Gründungsmitglied werden","seats.free":"Freier Platz für Gründungsmitglieder: jetzt anfragen",
+ "ex.formt":"Als Gründungsmitglied bewerben","price.n1":"für die 50 Gründungsmitglieder",
+ "offer":"<strong>Gründungsmitglieder</strong>Nur 50 Plätze, mit exklusiven Vorteilen: 3 Monate kostenloser Stand, von uns eingerichtet, und keine Provision auf Bestellungen. Danach 49 € im Monat, jederzeit kündbar. <a href='#esponi'>Bewerben</a>",
+ "full.t":"50 von 50: alle Plätze vergeben!","full.p":"Danke an die 50 Gründungsmitglieder. Die Messe öffnet in Kürze.","full.x":"Schließen"});
 function showFull(){
   if(SEATS_TAKEN<SEATS_TOTAL) return;
   const seatsEl=document.querySelector(".hero .seats"); if(!seatsEl) return;
@@ -2967,7 +2970,7 @@ function renderByDone(){
   slot.innerHTML = `<div class="ok" role="status" tabindex="-1" id="by-ok"><h3>${t("by.ok.t")}</h3><p>${t("by.ok")}</p></div>`;
 }
 /* ---------- launch places: update these two numbers ---------- */
-const SEATS_TAKEN = 30, SEATS_TOTAL = 30;
+const SEATS_TAKEN = 33, SEATS_TOTAL = 50;
 function renderSeats(){
   document.getElementById("seats-num").textContent = t("seats.n",SEATS_TAKEN,SEATS_TOTAL);
   document.getElementById("seats-left").textContent = t("seats.left",Math.max(0,SEATS_TOTAL-SEATS_TAKEN));
