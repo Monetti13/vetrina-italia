@@ -1562,6 +1562,34 @@ dl.factsheet>div:last-child{border-bottom:0}
 @media (max-width:1200px){.top .wrap{gap:12px}.top nav{gap:0}.top nav a{padding:8px 8px;font-size:14px}}
 @media (max-width:1060px){.top nav a{padding:8px 5px;font-size:13px}.lang select{max-width:128px;padding-left:10px}}
 </style>
+<style id="cd-css">
+.seats[hidden]{display:none!important}
+.cd{position:relative;z-index:2;margin:0 0 34px;background:linear-gradient(135deg,rgba(255,255,255,.09),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:22px;padding:24px 28px;display:grid;grid-template-columns:minmax(0,1.15fr) auto minmax(0,.8fr);gap:16px 30px;align-items:center;color:#fff;overflow:hidden}
+.cd:before{content:"";position:absolute;inset:-40% -10% auto auto;width:60%;height:160%;background:radial-gradient(closest-side,rgba(61,255,176,.16),transparent);pointer-events:none}
+.cd .cd-head{display:flex;flex-direction:column;gap:10px;align-items:flex-start;position:relative}
+.cd .tag{padding:4px 12px;border-radius:999px;background:#3DFFB0;color:#07070F;font:800 12px/1.4 var(--display);letter-spacing:.07em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px}
+.cd .tag:before{content:"";width:8px;height:8px;border-radius:50%;background:#07070F;animation:cdblink 1s steps(2,jump-none) infinite}
+.cd .cd-date{margin:0;font:700 clamp(16px,1.4vw,19px)/1.3 var(--display);color:#fff;text-wrap:balance}
+.cd .cd-tiles{display:flex;align-items:flex-start;gap:10px;position:relative}
+.cd .cd-u{display:flex;flex-direction:column;align-items:center;gap:8px;min-width:0}
+.cd .cd-n{position:relative;display:grid;place-items:center;width:clamp(64px,7.2vw,96px);height:clamp(72px,8vw,104px);border-radius:16px;background:linear-gradient(180deg,#143E37 0%,#0B2A25 49.5%,#07201C 50.5%,#0E332D 100%);border:1px solid rgba(61,255,176,.28);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.12);font:800 clamp(34px,4.2vw,56px)/1 var(--display);font-variant-numeric:tabular-nums;letter-spacing:.01em;color:#fff;overflow:hidden}
+.cd .cd-n:after{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(0,0,0,.45)}
+.cd .cd-n b{display:block;font-weight:800}
+.cd .cd-n.tick b{animation:cdflip .42s cubic-bezier(.2,.8,.2,1)}
+.cd .cd-u:last-child .cd-n{border-color:rgba(242,193,78,.5);color:#F2C14E}
+.cd .cd-l{font:700 11px/1.2 var(--display);letter-spacing:.05em;text-transform:uppercase;color:#BFE0D6;text-align:center;white-space:nowrap}
+.cd .cd-sep{font:800 clamp(28px,3.4vw,44px)/1 var(--display);color:rgba(61,255,176,.7);align-self:flex-start;margin-top:clamp(18px,2.1vw,28px);animation:cdblink 1s steps(2,jump-none) infinite}
+.cd .cd-side{display:flex;flex-direction:column;gap:10px;align-items:flex-start;position:relative}
+.cd .cd-side p{margin:0;font-size:15.5px;line-height:1.5;color:#DCE9E5}
+.cd a.s-cta{color:var(--mint);font-weight:700;text-underline-offset:3px}
+.cd.done .cd-n{border-color:#3DFFB0;color:#3DFFB0}
+.cd.done .cd-sep,.cd.done .tag:before{animation:none}
+@keyframes cdflip{0%{transform:translateY(-55%);opacity:0}100%{transform:none;opacity:1}}
+@keyframes cdblink{0%{opacity:1}100%{opacity:.25}}
+@media (max-width:1100px){.cd{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:22px 18px;gap:18px}.cd .cd-head,.cd .cd-side{align-items:center}}
+@media (max-width:520px){.cd{margin-bottom:26px}.cd .cd-tiles{gap:5px}.cd .cd-n{width:min(19vw,74px);height:min(21vw,82px);font-size:min(10.5vw,40px);border-radius:13px}.cd .cd-sep{font-size:24px;margin-top:min(6vw,24px)}.cd .cd-l{font-size:9.5px;letter-spacing:.02em}}
+@media (prefers-reduced-motion:reduce){.cd .cd-n.tick b,.cd .cd-sep,.cd .tag:before{animation:none}}
+</style>
 </head>
 <body>
 <div class="fx-progress" aria-hidden="true"></div>
@@ -1605,7 +1633,23 @@ dl.factsheet>div:last-child{border-bottom:0}
           <p class="globe-hint" data-i18n="globe.hint"></p>
         </div>
       </div>
-      <aside class="seats hin" style="--d:5" aria-labelledby="seats-lbl">
+      <aside class="cd hin" style="--d:5" id="cd" role="timer" aria-labelledby="cd-date">
+        <div class="cd-head">
+          <span class="tag" data-i18n="hero.t3"></span>
+          <p class="cd-date" id="cd-date"></p>
+        </div>
+        <div class="cd-tiles" aria-hidden="true">
+          <div class="cd-u"><span class="cd-n" data-u="d"><b>00</b></span><span class="cd-l" data-l="day"></span></div><span class="cd-sep">:</span>
+          <div class="cd-u"><span class="cd-n" data-u="h"><b>00</b></span><span class="cd-l" data-l="hour"></span></div><span class="cd-sep">:</span>
+          <div class="cd-u"><span class="cd-n" data-u="m"><b>00</b></span><span class="cd-l" data-l="minute"></span></div><span class="cd-sep">:</span>
+          <div class="cd-u"><span class="cd-n" data-u="s"><b>00</b></span><span class="cd-l" data-l="second"></span></div>
+        </div>
+        <div class="cd-side">
+          <p data-i18n="hero.t1"></p>
+          <a class="s-cta" href="#esponi" data-i18n="seats.cta" data-umami-event="clic_esponi" data-umami-event-dove="countdown"></a>
+        </div>
+      </aside>
+      <aside class="seats" hidden aria-hidden="true">
         <div class="s-head">
           <span class="tag" data-i18n="seats.tag"></span>
           <p class="num" id="seats-num"></p>
@@ -3112,6 +3156,29 @@ bindSticky();
 renderText();
 </script>
 <script>(function(){var p=document.getElementById("pv");function o(){p.classList.add("open");document.body.style.overflow="hidden";}function c(){p.classList.remove("open");document.body.style.overflow="";if(location.hash==="#privacy")history.replaceState(null,"",location.pathname);}document.getElementById("pv-open").onclick=function(){o();history.replaceState(null,"","#privacy");};p.querySelector(".x").onclick=c;p.addEventListener("click",function(e){if(e.target===p)c();});document.addEventListener("keydown",function(e){if(e.key==="Escape")c();});if(location.hash==="#privacy")o();window.addEventListener("hashchange",function(){if(location.hash==="#privacy")o();});})();</script><script>window.MERCATALE_ASSISTENTE={ai:""};EX.forEach(function(e){e.es=true;});</script>
+<script>
+/* ---------- conto alla rovescia: la fiera apre il 1 dicembre 2026 alle 00:00 ora italiana (30 novembre, 23:00 UTC) ---------- */
+(function(){
+  const box = document.getElementById("cd"); if(!box) return;
+  const OPEN = Date.UTC(2026,10,30,23,0,0), EN = {day:["day","days"],hour:["hour","hours"],minute:["minute","minutes"],second:["second","seconds"]};
+  const nEl = {}, lEl = {}; box.querySelectorAll("[data-u]").forEach(e=>nEl[e.dataset.u]=e); box.querySelectorAll("[data-l]").forEach(e=>lEl[e.dataset.l]=e);
+  const last = {};
+  const SHORT = {};
+  function unit(u,n,long){ try{ const p = new Intl.NumberFormat(lang,{style:"unit",unit:u,unitDisplay:(SHORT[u] && !long)?"short":"long"}).formatToParts(n).find(x=>x.type==="unit"); if(p && p.value.trim()) return p.value.trim(); }catch(e){} return EN[u][n===1?0:1]; }
+  function date(){ let s = ""; try{ s = new Intl.DateTimeFormat(lang,{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome",timeZoneName:"short"}).format(new Date(OPEN)); }catch(e){ s = "1 December 2026, 00:00 CET"; } document.getElementById("cd-date").textContent = s; }
+  function set(k,v,u){ const s = String(v).padStart(2,"0"), e = nEl[k]; if(last[k]!==s){ e.firstElementChild.textContent = s; if(last[k]!==undefined){ e.classList.remove("tick"); void e.offsetWidth; e.classList.add("tick"); } last[k] = s; }
+    const l = unit(u,v); if(lEl[u].textContent!==l) lEl[u].textContent = l; }
+  function tick(){ const left = Math.max(0, OPEN-Date.now()), t = Math.floor(left/1000);
+    set("d",Math.floor(t/86400),"day"); set("h",Math.floor(t%86400/3600),"hour"); set("m",Math.floor(t%3600/60),"minute"); set("s",t%60,"second");
+    box.classList.toggle("done", left===0); return left; }
+  function fit(){ for(const u in lEl){ SHORT[u] = false; lEl[u].textContent = unit(u,2,true); SHORT[u] = lEl[u].offsetWidth > lEl[u].previousElementSibling.offsetWidth+8; } }
+  date(); fit(); tick();
+  (function loop(){ const left = tick(); if(left>0) setTimeout(loop, 1000-(Date.now()%1000)+5); })();
+  document.addEventListener("mercatale:lang", ()=>{ date(); fit(); tick(); });
+  addEventListener("resize", ()=>{ fit(); tick(); });
+  document.addEventListener("visibilitychange", ()=>{ if(!document.hidden) tick(); });
+})();
+</script>
 <script src="assistente.js"></script>
 </body>
 </html>
