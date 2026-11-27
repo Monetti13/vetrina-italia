@@ -1580,7 +1580,7 @@ dl.factsheet>div:last-child{border-bottom:0}
 .cd .cd-u:last-child .cd-n{border-color:rgba(242,193,78,.5);color:#F2C14E}
 .cd .cd-l{font:700 11px/1.2 var(--display);letter-spacing:.05em;text-transform:uppercase;color:#BFE0D6;text-align:center;white-space:nowrap}
 .cd .cd-sep{font:800 clamp(28px,3.4vw,44px)/1 var(--display);color:rgba(61,255,176,.7);align-self:flex-start;margin-top:clamp(18px,2.1vw,28px);animation:cdblink 1s steps(2,jump-none) infinite}
-.cd .cd-side{display:flex;flex-direction:column;gap:10px;align-items:flex-start;position:relative}
+.cd .cd-side{display:flex;flex-direction:column;gap:10px;align-items:flex-start;position:relative;padding-bottom:21px}
 .cd .cd-side p{margin:0;font-size:15.5px;line-height:1.5;color:#DCE9E5}
 .cd a.cd-join{display:inline-flex;align-items:center;gap:12px;padding:8px 18px 8px 8px;border-radius:14px;background:rgba(242,193,78,.08);border:1px solid rgba(242,193,78,.35);color:#fff;font:800 17px/1 var(--display);text-decoration:none;transition:background .25s,border-color .25s,transform .25s var(--spring)}
 .cd a.cd-join .seat{position:relative;flex:none;width:38px;height:38px;border-radius:9px;border:1.5px dashed var(--gold);background:rgba(242,193,78,.14);animation:freepulse 1.6s ease-in-out infinite;transition:background .25s,border-color .25s}
@@ -1595,7 +1595,7 @@ dl.factsheet>div:last-child{border-bottom:0}
 .cd.done .cd-sep,.cd.done .tag:before{animation:none}
 @keyframes cdflip{0%{transform:translateY(-55%);opacity:0}100%{transform:none;opacity:1}}
 @keyframes cdblink{0%{opacity:1}100%{opacity:.25}}
-@media (max-width:1100px){.cd{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:22px 18px;gap:18px}.cd .cd-head,.cd .cd-side{align-items:center}}
+@media (max-width:1100px){.cd{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:center;padding:22px 18px;gap:18px}.cd .cd-head,.cd .cd-side{align-items:center}.cd .cd-side{padding-bottom:0}}
 @media (max-width:520px){.cd{margin-bottom:26px}.cd .cd-tiles{gap:5px}.cd .cd-n{width:min(19vw,74px);height:min(21vw,82px);font-size:min(10.5vw,40px);border-radius:13px}.cd .cd-sep{font-size:24px;margin-top:min(6vw,24px)}.cd .cd-l{font-size:9.5px;letter-spacing:.02em}}
 @media (prefers-reduced-motion:reduce){.cd .cd-n.tick b,.cd .cd-sep,.cd .tag:before{animation:none}}
 </style>
@@ -1654,7 +1654,6 @@ dl.factsheet>div:last-child{border-bottom:0}
           <div class="cd-u"><span class="cd-n" data-u="s"><b>00</b></span><span class="cd-l" data-l="second"></span></div>
         </div>
         <div class="cd-side">
-          <p data-i18n="hero.t1"></p>
           <a class="cd-join" href="#esponi" data-umami-event="clic_esponi" data-umami-event-dove="countdown"><i class="seat" aria-hidden="true"></i><span id="cd-join">Iscriviti</span></a>
         </div>
       </aside>
