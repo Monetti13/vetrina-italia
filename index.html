@@ -1582,7 +1582,15 @@ dl.factsheet>div:last-child{border-bottom:0}
 .cd .cd-sep{font:800 clamp(28px,3.4vw,44px)/1 var(--display);color:rgba(61,255,176,.7);align-self:flex-start;margin-top:clamp(18px,2.1vw,28px);animation:cdblink 1s steps(2,jump-none) infinite}
 .cd .cd-side{display:flex;flex-direction:column;gap:10px;align-items:flex-start;position:relative}
 .cd .cd-side p{margin:0;font-size:15.5px;line-height:1.5;color:#DCE9E5}
-.cd a.s-cta{color:var(--mint);font-weight:700;text-underline-offset:3px}
+.cd a.cd-join{display:inline-flex;align-items:center;gap:12px;padding:8px 18px 8px 8px;border-radius:14px;background:rgba(242,193,78,.08);border:1px solid rgba(242,193,78,.35);color:#fff;font:800 17px/1 var(--display);text-decoration:none;transition:background .25s,border-color .25s,transform .25s var(--spring)}
+.cd a.cd-join .seat{position:relative;flex:none;width:38px;height:38px;border-radius:9px;border:1.5px dashed var(--gold);background:rgba(242,193,78,.14);animation:freepulse 1.6s ease-in-out infinite;transition:background .25s,border-color .25s}
+.cd a.cd-join .seat:before{content:"+";position:absolute;inset:0;display:grid;place-items:center;color:var(--gold);font:800 20px/1 var(--display);transition:opacity .2s}
+.cd a.cd-join .seat:after{content:"";position:absolute;left:22%;right:22%;top:22%;height:22%;border-radius:2px 2px 0 0;background:#0C2622;box-shadow:0 7px 0 -1px rgba(12,38,34,.6);opacity:0;transition:opacity .2s}
+.cd a.cd-join:hover,.cd a.cd-join:focus-visible{background:rgba(61,255,176,.12);border-color:var(--mint);transform:translateY(-2px)}
+.cd a.cd-join:hover .seat,.cd a.cd-join:focus-visible .seat{background:var(--mint);border:1.5px solid var(--mint);animation:none}
+.cd a.cd-join:hover .seat:before,.cd a.cd-join:focus-visible .seat:before{opacity:0}
+.cd a.cd-join:hover .seat:after,.cd a.cd-join:focus-visible .seat:after{opacity:.8}
+@media (prefers-reduced-motion:reduce){.cd a.cd-join .seat{animation:none}}
 .cd.done .cd-n{border-color:#3DFFB0;color:#3DFFB0}
 .cd.done .cd-sep,.cd.done .tag:before{animation:none}
 @keyframes cdflip{0%{transform:translateY(-55%);opacity:0}100%{transform:none;opacity:1}}
@@ -1647,7 +1655,7 @@ dl.factsheet>div:last-child{border-bottom:0}
         </div>
         <div class="cd-side">
           <p data-i18n="hero.t1"></p>
-          <a class="s-cta" href="#esponi" data-i18n="seats.cta" data-umami-event="clic_esponi" data-umami-event-dove="countdown"></a>
+          <a class="cd-join" href="#esponi" data-umami-event="clic_esponi" data-umami-event-dove="countdown"><i class="seat" aria-hidden="true"></i><span id="cd-join">Iscriviti</span></a>
         </div>
       </aside>
       <aside class="seats" hidden aria-hidden="true">
@@ -3168,7 +3176,9 @@ renderText();
   const last = {};
   const SHORT = {};
   function unit(u,n,long){ try{ const p = new Intl.NumberFormat(lang,{style:"unit",unit:u,unitDisplay:(SHORT[u] && !long)?"short":"long"}).formatToParts(n).find(x=>x.type==="unit"); if(p && p.value.trim()) return p.value.trim(); }catch(e){} return EN[u][n===1?0:1]; }
-  function date(){ let s = ""; try{ s = new Intl.DateTimeFormat(lang,{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome",timeZoneName:"short"}).format(new Date(OPEN)); }catch(e){ s = "1 December 2026, 00:00 CET"; } document.getElementById("cd-date").textContent = s; }
+  const JOIN = {it:"Iscriviti",en:"Sign up",de:"Jetzt anmelden",fr:"S'inscrire",es:"Inscribirse",pt:"Inscrever-se",nl:"Aanmelden",pl:"Zapisz się",cs:"Registrovat se",sk:"Zaregistrovať sa",sl:"Prijavite se",hr:"Prijavite se",hu:"Jelentkezzen",ro:"Înscrieți-vă",bg:"Регистрирайте се",el:"Εγγραφείτε",da:"Tilmeld dig",sv:"Anmäl dig",fi:"Ilmoittaudu",et:"Registreeruge",lv:"Piesakieties",lt:"Užsiregistruokite",ga:"Cláraigh",mt:"Irreġistra"};
+  function join(){ const e = document.getElementById("cd-join"); if(e) e.textContent = JOIN[lang] || JOIN.en; }
+  function date(){ join(); let s = ""; try{ s = new Intl.DateTimeFormat(lang,{day:"numeric",month:"long",year:"numeric",hour:"2-digit",minute:"2-digit",timeZone:"Europe/Rome",timeZoneName:"short"}).format(new Date(OPEN)); }catch(e){ s = "1 December 2026, 00:00 CET"; } document.getElementById("cd-date").textContent = s; }
   function set(k,v,u){ const s = String(v).padStart(2,"0"), e = nEl[k]; if(last[k]!==s){ e.firstElementChild.textContent = s; if(last[k]!==undefined){ e.classList.remove("tick"); void e.offsetWidth; e.classList.add("tick"); } last[k] = s; }
     const l = unit(u,v); if(lEl[u].textContent!==l) lEl[u].textContent = l; }
   function tick(){ const left = Math.max(0, OPEN-Date.now()), t = Math.floor(left/1000);
