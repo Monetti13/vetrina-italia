@@ -1599,6 +1599,10 @@ dl.factsheet>div:last-child{border-bottom:0}
 @media (max-width:520px){.cd{margin-bottom:26px}.cd .cd-tiles{gap:5px}.cd .cd-n{width:min(19vw,74px);height:min(21vw,82px);font-size:min(10.5vw,40px);border-radius:13px}.cd .cd-sep{font-size:24px;margin-top:min(6vw,24px)}.cd .cd-l{font-size:9.5px;letter-spacing:.02em}}
 @media (prefers-reduced-motion:reduce){.cd .cd-n.tick b,.cd .cd-sep,.cd .tag:before{animation:none}}
 </style>
+<style id="order-css">
+#esplora .explore-grid + .as{margin-top:34px}
+#as #as-ex{display:none!important}
+</style>
 </head>
 <body>
 <div class="fx-progress" aria-hidden="true"></div>
@@ -1678,6 +1682,17 @@ dl.factsheet>div:last-child{border-bottom:0}
   <section class="explore" id="esplora" aria-labelledby="explore-title">
     <div class="wrap">
       <div class="ex-head" data-rv><p class="eyebrow" data-i18n="explore.kicker"></p><h2 id="explore-title" data-i18n="nav.explore"></h2><p class="facts" id="facts"></p></div>
+      <div class="explore-grid">
+        <div class="pavwrap" id="padiglioni">
+          <h2 class="pavh" id="pav-title" data-i18n="pav.title"></h2>
+          <div class="pavs" id="pavs" role="group" aria-labelledby="pav-title"></div>
+        </div>
+        <div class="listcol"><h2 class="pavh" data-i18n="gal.title"></h2><p class="gal-swipe" data-i18n="gal.swipe"></p><div class="list" id="list"></div></div>
+        <div class="mapcol">
+          <div id="map" role="region" aria-label="Mappa degli espositori"></div>
+          <div class="legend" id="legend" aria-hidden="true"></div>
+        </div>
+      </div>
       <div class="toolbar" id="toolbar">
         <div class="field search">
           <label for="q" data-i18n="f.search"></label>
@@ -1696,17 +1711,6 @@ dl.factsheet>div:last-child{border-bottom:0}
           <span id="cert-chips"></span>
           <button type="button" class="reset" id="reset" data-i18n="f.reset"></button>
           <p class="count" id="count" aria-live="polite"></p>
-        </div>
-      </div>
-      <div class="explore-grid">
-        <div class="pavwrap" id="padiglioni">
-          <h2 class="pavh" id="pav-title" data-i18n="pav.title"></h2>
-          <div class="pavs" id="pavs" role="group" aria-labelledby="pav-title"></div>
-        </div>
-        <div class="listcol"><h2 class="pavh" data-i18n="gal.title"></h2><p class="gal-swipe" data-i18n="gal.swipe"></p><div class="list" id="list"></div></div>
-        <div class="mapcol">
-          <div id="map" role="region" aria-label="Mappa degli espositori"></div>
-          <div class="legend" id="legend" aria-hidden="true"></div>
         </div>
       </div>
     </div>
